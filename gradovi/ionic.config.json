@@ -1,0 +1,7 @@
+{
+  "name": "gradovi",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
