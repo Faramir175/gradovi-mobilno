@@ -1,0 +1,16 @@
+<h1 class="page-title">POPULARNI GRADOVI</h1>
+<div class="cities-container">
+  <div *ngFor="let city of cities" class="city-container" (click)="navigateToDetails(city.id, $event)">
+    <div class="image-container">
+      <img [src]="city.imageUrl" alt="{{ city.name }}" class="city-image" />
+      <div class="city-info">
+        <span class="city-name">{{ city.name }}</span>
+        <ion-icon 
+          [name]="city.isInFavorites ? 'heart' : 'heart-outline'" 
+          class="favorites-icon" 
+          (click)="city.isInFavorites ? removeFromFavorites(city, $event) : addToFavorites(city, $event)">
+        </ion-icon>
+      </div>
+    </div>
+  </div>
+</div>

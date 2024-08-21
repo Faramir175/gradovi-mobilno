@@ -1,0 +1,10 @@
+<h1>Moji Omiljeni Gradovi</h1>
+<div *ngFor="let city of favoriteCities" class="city-container">
+  <div class="image-container">
+    <img [src]="city.imageUrl" alt="{{ city.name }}" class="city-image" />
+    <div class="city-info">
+      <span class="city-name">{{ city.name }}</span>
+      <ion-icon name="heart" class="favorites-icon added" (click)="removeFromFavorites(city.id)"></ion-icon>
+    </div>
+  </div>
+</div>
