@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CityService } from '../services/city.service';
 import { City } from '../models/city-model';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-cities',
@@ -11,51 +12,67 @@ export class CitiesComponent implements OnInit {
   cities: City[] = [];
   favorites: string[] = []; // Lista omiljenih gradova
 
-  constructor(private cityService: CityService) {
+  constructor(private cityService: CityService, private authService: AuthService) {
     console.log('CitiesComponent inicijalizovan.');
   }
 
   ngOnInit() {
-    console.log("Uspesno kurac");
-    this.getCities();
+    this.loadCities();
+    this.loadFavoriteCities(); // Učitaj omiljene gradove pri inicijalizaciji
   }
 
-  getCities() {
-    console.log('Poziv za dobijanje gradova');
-    this.cityService.getCities().subscribe((cities) => {
-        console.log('Gradovi dobijeni:', cities);
-        this.cities = cities.map(city => ({
-            ...city,
-            isInFavorites: false // Inicijalizuj isInFavorites
-        }));
-        this.checkFavorites();
+  loadCities() {
+    this.cityService.getCities().subscribe((data: City[]) => {
+      this.cities = data;
+      console.log(this.cities); // Proverite da li ste uspešno učitali gradove
+      this.checkFavorites(); // Proverite omiljene gradove nakon učitavanja
     }, error => {
-        console.error('Greška prilikom dobijanja gradova:', error);
+      console.error("Greška prilikom učitavanja gradova:", error);
     });
+  }
+
+  loadFavoriteCities() {
+    const userId = this.authService.getUserId();
+    if (userId) {
+      this.cityService.getFavoriteCities(userId).subscribe(favorites => {
+        this.favorites = favorites.map(fav => fav.cityId); // Dobijamo ID-ove omiljenih gradova
+        this.checkFavorites(); // Ažuriraj status omiljenih gradova
+      });
+    }
   }
 
   checkFavorites() {
     this.cities.forEach(city => {
-      if (this.favorites.includes(city.id)) {
-        city.isInFavorites = true;
-      } else {
-        city.isInFavorites = false;
-      }
+      city.isInFavorites = this.favorites.includes(city.id);
     });
   }
 
-  addToFavorites(city: City, event: MouseEvent) {
-    event.stopPropagation();
-    if (!this.favorites.includes(city.id)) {
-      this.favorites.push(city.id);
-      city.isInFavorites = true;
+  addToFavorites(city: City, event: MouseEvent): void {
+    event.stopPropagation(); // Prekinite propagaciju klika
+    const userId = this.authService.getUserId(); // Dobijte ID korisnika
+  
+    if (userId) {
+      this.cityService.addCityToFavorites(userId, city.id).subscribe(() => {
+        city.isInFavorites = true; // Postavite isInFavorites na true
+        this.favorites.push(city.id); // Ažuriraj listu omiljenih
+      });
+    } else {
+      console.error("User ID is null, cannot add city to favorites.");
     }
   }
 
-  removeFromFavorites(city: City, event: MouseEvent) {
-    event.stopPropagation();
-    this.favorites = this.favorites.filter(id => id !== city.id);
-    city.isInFavorites = false;
+  removeFromFavorites(city: City, event: MouseEvent): void {
+    event.stopPropagation(); // Prekinite propagaciju klika
+    const userId = this.authService.getUserId(); // Dobijte ID korisnika
+  
+    if (userId) {
+      this.cityService.removeCityFromFavorites(userId, city.id).subscribe(() => {
+        city.isInFavorites = false; // Postavite isInFavorites na false
+        this.favorites = this.favorites.filter(fav => fav !== city.id); // Ažuriraj listu omiljenih
+      });
+    } else {
+      console.error("User ID is null, cannot remove city from favorites.");
+    }
   }
 
   navigateToDetails(cityId: string, event: MouseEvent) {

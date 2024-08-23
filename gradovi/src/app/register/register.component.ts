@@ -10,18 +10,25 @@ import { AuthService } from '../services/auth.service'; // Kreiramo AuthService 
 export class RegisterComponent {
   email: string = '';
   password: string = '';
+  username: string = ''; // Novo polje za korisničko ime
+  yearOfBirth: number | null = null; // Novo polje za godinu rođenja
 
   constructor(private authService: AuthService, private router: Router) {}
 
   register() {
-    this.authService.register(this.email, this.password).subscribe(
-      response => {
-        console.log('Uspešno ste se registrovali:', response);
-        this.router.navigate(['/login']); // Preusmeri korisnika na login nakon registracije
-      },
-      error => {
-        console.error('Greška pri registraciji:', error);
-      }
-    );
+    if (this.email && this.password && this.username && this.yearOfBirth) {
+      this.authService.register(this.email, this.password, this.username, this.yearOfBirth)
+        .subscribe(
+          response => {
+            console.log('Uspešno ste se registrovali:', response);
+            this.router.navigate(['/login']); // Preusmeri korisnika na login nakon registracije
+          },
+          error => {
+            console.error('Greška pri registraciji:', error);
+          }
+        );
+    } else {
+      console.error('Sva polja su obavezna.');
+    }
   }
 }

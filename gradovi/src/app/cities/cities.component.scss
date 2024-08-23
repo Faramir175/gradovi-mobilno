@@ -2,12 +2,10 @@
   text-align: center;
   
 }
-body{
-  background-color: aqua;
-}
+
 .cities-container {
   display: flex;
-  background-color: red;
+ 
   flex-wrap: wrap; /* Omogućava prelamanje u novi red */
   justify-content: center;
   overflow-y: auto; /* Omogućava vertikalno skrolovanje */
@@ -16,7 +14,6 @@ body{
 }
 
 .city-container {
-  background-color: red;
   width: 300px;
   height: 200px; /* Širina svakog grada (3 u redu sa razmakom) */
   margin: 10px; /* Razmak između gradova */

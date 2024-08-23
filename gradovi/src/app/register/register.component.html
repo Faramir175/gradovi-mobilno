@@ -1,21 +1,37 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Registracija</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item>
-    <ion-label position="floating">Email</ion-label>
-    <ion-input [(ngModel)]="email" type="email"></ion-input>
-  </ion-item>
+<ion-content class="registration-content">
+  <div class="registration-container">
+    <h2>Napravi novi nalog</h2>
+    
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input [(ngModel)]="email" type="email" required></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="floating">Lozinka</ion-label>
-    <ion-input [(ngModel)]="password" type="password"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label position="floating">Lozinka</ion-label>
+      <ion-input [(ngModel)]="password" type="password" required></ion-input>
+    </ion-item>
 
-  <ion-button expand="full" (click)="register()">Registruj se</ion-button>
+    <!-- Novo polje za korisničko ime -->
+    <ion-item>
+      <ion-label position="floating">Korisničko ime</ion-label>
+      <ion-input [(ngModel)]="username" type="text" required></ion-input>
+    </ion-item>
 
-  <ion-button expand="full" fill="outline" routerLink="/login">Već imaš nalog? Uloguj se</ion-button>
+    <!-- Novo polje za godinu rođenja -->
+    <ion-item>
+      <ion-label position="floating">Godina rođenja</ion-label>
+      <ion-input [(ngModel)]="yearOfBirth" type="number" required></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" (click)="register()" class="register-button">Registruj se</ion-button>
+
+    <ion-button expand="full" fill="outline" routerLink="/login" class="login-button">Već imaš nalog? Uloguj se</ion-button>
+  </div>
 </ion-content>

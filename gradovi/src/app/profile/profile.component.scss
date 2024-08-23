@@ -1,0 +1,42 @@
+ion-content {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100%;
+    background: red;
+    padding: 20px;
+  }
+  
+  .profile-card {
+    background-color: #ffffff; // Bela pozadina za karticu
+    border-radius: 12px; // Veće zaobljene ivice
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); // Jača senka
+    padding: 30px; // Povećano unutrašnje odstojanje
+    width: 100%;
+    max-width: 500px; // Šira kartica
+    text-align: center;
+  
+    h2 {
+      font-size: 28px; // Veća veličina fonta
+      margin-bottom: 15px;
+      color: #00796b; // Tamno plava boja
+    }
+  
+    p {
+      font-size: 18px; // Veća veličina fonta
+      margin: 8px 0;
+      color: #424242; // Siva boja
+    }
+  
+    strong {
+      color: #000; // Crna boja za naglašene tekstove
+    }
+  }
+  
+  .login-prompt {
+    text-align: center;
+    font-size: 20px;
+    color: #d32f2f; // Crvena boja za poruku o prijavi
+    font-weight: bold;
+  }
+  

@@ -1,0 +1,73 @@
+.page-title{
+    text-align: center;
+    
+  }
+  
+  .cities-container {
+    display: flex;
+   
+    flex-wrap: wrap; /* Omogućava prelamanje u novi red */
+    justify-content: center;
+    overflow-y: auto; /* Omogućava vertikalno skrolovanje */
+    max-height: 80vh; /* Maksimalna visina kontejnera */
+    padding: 10px; /* Udaljenost od ivica */
+  }
+  
+  .city-container {
+    width: 300px;
+    height: 200px; /* Širina svakog grada (3 u redu sa razmakom) */
+    margin: 10px; /* Razmak između gradova */
+    cursor: pointer; /* Promena pokazivača pri prelaženju mišem */
+    border: 1px solid #ccc; /* Granica oko kartice */
+    border-radius: 8px; /* Zaobljeni uglovi */
+    overflow: hidden; /* Sakrij delove koji izlaze izvan kartice */
+    position: relative; /* Potrebno za pozicioniranje .city-info */
+    transition: transform 0.3s; /* Efekat prilikom hovera */
+  }
+  
+  .city-container:hover {
+    transform: scale(1.05); /* Uvećava karticu prilikom hovera */
+  }
+  
+  .image-container {
+    position: relative; /* Za pozicioniranje informacija o gradu */
+  }
+  
+  .city-image {
+    width: 100%; /* Širina slike */
+    height: 100%; /* Automatska visina slike */
+    object-fit: cover; /* Povećava sliku da pokrije celokupnu površinu */
+  }
+  
+  .city-info {
+    position: absolute; /* Pozicionira naziv grada i ikone */
+    bottom: 10px; /* Udaljenost od donjeg ruba */
+    left: 10px; /* Udaljenost od levog ruba */
+    color: white; /* Boja teksta */
+    background-color: rgba(0, 0, 0, 0.5); /* Poluprozirna pozadina */
+    padding: 5px; /* Udaljenost unutar info kutije */
+    border-radius: 5px; /* Zaobljeni uglovi pozadine */
+    display: flex; /* Da bi se elementi poravnali */
+    align-items: center; /* Vertikalno centriranje */
+  }
+  
+  .city-name {
+    font-size: 16px; /* Veličina fonta imena grada */
+    font-weight: bold; /* Podebljan tekst */
+    margin-right: 5px; /* Razmak između imena grada i ikone */
+  }
+  
+  .favorites-icon {
+    width: 20px; /* Širina ikone */
+    height: 20px; /* Visina ikone */
+    cursor: pointer; /* Promena pokazivača pri prelaženju mišem */
+    transition: transform 0.2s; /* Efekat prilikom hovera na ikoni */
+  }
+  .added{
+    color: red;
+  }
+  
+  .favorites-icon:hover {
+    transform: scale(1.2); /* Uvećava ikonu prilikom hovera */
+  }
+  

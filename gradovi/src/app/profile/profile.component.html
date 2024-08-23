@@ -1,3 +1,17 @@
-<h1>Moj Profil</h1>
-<p>Ime: {{ user.name }}</p>
-<p>Email: {{ user.email }}</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Profil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="profile-card">
+    <h2>Profil Korisnika</h2>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Godina Rođenja:</strong> {{ user.yearOfBirth }}</p>
+
+    <ion-button expand="full" color="danger" (click)="logout()">Odjavi se</ion-button> <!-- Dugme za odjavu -->
+  </div>
+
+</ion-content>
