@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { CityService } from '../services/city.service';
 import { City } from '../models/city-model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-favorites',
@@ -12,7 +13,7 @@ export class FavoritesComponent implements OnInit {
   favoriteCities: City[] = []; // Lista omiljenih gradova
   favorites: string[] = [];
 
-  constructor(private cityService: CityService, private authService: AuthService) {}
+  constructor(private cityService: CityService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     const userId = this.authService.getUserId(); // Dobijte ID korisnika
@@ -68,5 +69,11 @@ export class FavoritesComponent implements OnInit {
     } else {
       console.error("User ID is null, cannot remove city from favorites.");
     }
+  }
+
+  navigateToDetails(cityId: string, event: MouseEvent): void {
+    event.stopPropagation(); // Sprečavanje događaja na roditeljskoj komponenti
+  
+    this.router.navigate(['/city-detail', cityId]); 
   }
 }

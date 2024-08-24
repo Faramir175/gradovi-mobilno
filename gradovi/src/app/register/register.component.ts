@@ -24,7 +24,8 @@ export class RegisterComponent {
             this.router.navigate(['/login']); // Preusmeri korisnika na login nakon registracije
           },
           error => {
-            console.error('Greška pri registraciji:', error);
+            console.error('Greška pri registraciji:', error.message);
+            console.error('Detalji greške:', error.error);
           }
         );
     } else {

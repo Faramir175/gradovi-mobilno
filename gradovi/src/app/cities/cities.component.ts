@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CityService } from '../services/city.service';
 import { City } from '../models/city-model';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-cities',
@@ -12,7 +15,7 @@ export class CitiesComponent implements OnInit {
   cities: City[] = [];
   favorites: string[] = []; // Lista omiljenih gradova
 
-  constructor(private cityService: CityService, private authService: AuthService) {
+  constructor(private cityService: CityService, private authService: AuthService, private router: Router,private dialog: MatDialog) {
     console.log('CitiesComponent inicijalizovan.');
   }
 
@@ -50,7 +53,6 @@ export class CitiesComponent implements OnInit {
   addToFavorites(city: City, event: MouseEvent): void {
     event.stopPropagation(); // Prekinite propagaciju klika
     const userId = this.authService.getUserId(); // Dobijte ID korisnika
-  
     if (userId) {
       this.cityService.addCityToFavorites(userId, city.id).subscribe(() => {
         city.isInFavorites = true; // Postavite isInFavorites na true
@@ -75,8 +77,10 @@ export class CitiesComponent implements OnInit {
     }
   }
 
-  navigateToDetails(cityId: string, event: MouseEvent) {
-    event.stopPropagation();
-    // Ovde će se otvoriti novi prozor sa detaljima grada
+  navigateToDetails(cityId: string, event: MouseEvent): void {
+    event.stopPropagation(); // Sprečavanje događaja na roditeljskoj komponenti
+  
+    this.router.navigate(['/city-detail', cityId]); 
   }
+  
 }

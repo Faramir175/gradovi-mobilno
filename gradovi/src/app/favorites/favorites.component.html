@@ -1,6 +1,6 @@
 <h1 class="page-title">MOJI OMILJENI GRADOVI</h1>
 <div class="cities-container">
-  <div *ngFor="let city of favoriteCities" class="city-container">
+  <div *ngFor="let city of favoriteCities" class="city-container" (click)="navigateToDetails(city.id, $event)">
     <div class="image-container">
       <img [src]="city.imageUrl" alt="{{ city.name }}" class="city-image" />
       <div class="city-info">

@@ -8,18 +8,16 @@ import { Router } from '@angular/router'; // Importujte Router
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  user: any;
+  username: string | null = '';
+  yearOfBirth: number | null = null;
+  email: string | null = '';
 
   constructor(private authService: AuthService, private router: Router) { } // Dodajte Router
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      this.user = {
-        email: this.authService.getEmail(), 
-        username: this.authService.getUsername(), // Dodajte korisničko ime
-        yearOfBirth: this.authService.getYearOfBirth() // Dodajte godinu rođenja
-      };
-    }
+    this.username = this.authService.getUsername();
+    this.yearOfBirth = this.authService.getYearOfBirth();
+    this.email = this.authService.getEmail();
   }
 
   logout(): void {

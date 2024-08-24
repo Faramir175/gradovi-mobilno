@@ -66,10 +66,10 @@ export class CityService {
 
   // Izbaci grad iz omiljenih
   removeCityFromFavorites(userId: string, cityId: string): Observable<void> {
-    console.log("Brisanje");
+    
     
     // Prvo pronađi favoriteId
-    console.log(cityId);
+    
     return this.getFavoriteIdByCityId(userId, cityId).pipe(
       switchMap(favoriteId => {
         if (favoriteId) {
@@ -88,12 +88,14 @@ export class CityService {
   }
   
   // Pomoćna metoda za pronalaženje favoriteId
-  private getFavoriteIdByCityId(userId: string, cityId: string): Observable<string | null> {
+  public getFavoriteIdByCityId(userId: string, cityId: string): Observable<string | null> {
+    console.log("Pozvana");
     return this.http.get<{ [key: string]: { cityId: string } }>(`${this.favoritesUrl}/${userId}.json`)
       .pipe(
         map(favorites => {
           for (const favoriteId in favorites) {
             if (favorites[favoriteId].cityId === cityId) {
+              
               return favoriteId; // Vraća favoriteId
             }
           }

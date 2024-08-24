@@ -10,6 +10,7 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   private signUpUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseConfig.apiKey}`;
   private signInUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseConfig.apiKey}`;
+  private databaseUrl = environment.firebaseConfig.databaseURL; // URL baze podataka
 
   constructor(private http: HttpClient) {}
 
@@ -19,15 +20,27 @@ export class AuthService {
       email,
       password,
       returnSecureToken: true,
-      displayName: username // Pošaljite korisničko ime
+      
     }).pipe(
       tap((response: any) => {
         if (response && response.idToken) {
           this.storeToken(response.idToken); // Čuvanje tokena
           this.storeEmail(email); // Čuvanje emaila
           this.storeUserData(username, yearOfBirth); // Čuvanje dodatnih podataka
+          const userId = response.localId;
+          this.saveUserData(userId, username, yearOfBirth);
         }
       })
+    );
+  }
+
+  saveUserData(userId: string, username:string, yearOfBirth: number):void{
+    this.http.put(`${this.databaseUrl}/users/${userId}.json`,{
+      username,
+      yearOfBirth
+    }).subscribe(
+      () => console.log('Podaci o korisniku uspešno sačuvani.'),
+      error => console.error('Greška prilikom čuvanja podataka: ', error)
     );
   }
 
@@ -42,9 +55,21 @@ export class AuthService {
         if (response && response.idToken) {
           this.storeToken(response.idToken); // Čuvanje tokena
           this.storeEmail(email); // Čuvanje emaila
-          // Ovdje možete dodati kod za dobijanje dodatnih podataka (username, yearOfBirth) ako su dostupni
+          const userId = response.localId;
+          this.fetchUserData(userId);
         }
       })
+    );
+  }
+
+  fetchUserData(userId: string) :void{
+    this.http.get(`${this.databaseUrl}/users/${userId}.json`).subscribe(
+    (userData: any) => {
+      if(userData){
+        this.storeUserData(userData.username, userData.yearOfBirth);
+      }
+    },
+    error => console.error('Greška prilikom preuzimanja podataka korisnika: ', error)
     );
   }
 

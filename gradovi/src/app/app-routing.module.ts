@@ -22,8 +22,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'city/:id',
-    loadChildren: () => import('./city-details/city-details.module').then(m => m.CityDetailsModule),
+    path: 'city-detail/:id',
+    loadChildren: () => import('./city-detail/city-detail.module').then(m => m.CityDetailModule),
     canActivate: [AuthGuard],
   },
   {

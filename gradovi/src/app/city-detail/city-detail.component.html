@@ -1,0 +1,50 @@
+<div class="city-detail-container" *ngIf="city">
+  <h1 class="city-title">{{ city.name }}</h1>
+  <div class="city-image-container">
+    <img [src]="city.imageUrl" alt="{{ city.name }}" class="city-image" />
+  </div>
+  <div class="city-info">
+    <p class="city-description">{{ city.description }}</p>
+    <p class="city-rating">Ocena: {{ city.rating }}</p>
+  </div>
+
+  <button class="city-btn" (click)="goBackToCities()">Nazad na gradove</button>
+  <button class="favorite-btn" (click)="goToFavorites()">Idi na Moja Putovanja</button>
+
+  <div *ngIf="isFavorite" class="favorite-form">
+    <h2>Ostavi recenziju za svoje putovanje</h2>
+    <form>
+      
+      <label for="rating">Ocena:</label>
+      <select id="rating" [(ngModel)]="review.Ocena" name="rating">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+  
+      <label for="duration">Trajanje putovanja (u danima):</label>
+      <input type="number" id="duration" [(ngModel)]="review.Broj_Dana" name="duration" min="1" placeholder="Unesite broj dana..." />
+  
+      <label for="peopleCount">Broj ljudi na putovanju:</label>
+      <input type="number" id="peopleCount" [(ngModel)]="review.Broj_Ljudi" name="peopleCount" min="1" placeholder="Unesite broj ljudi..." />
+  
+      <label for="accommodationType">Tip smeštaja:</label>
+      <select id="accommodationType" [(ngModel)]="review.Tip_Smestaja" name="accommodationType">
+        <option value="Hotel">Hotel</option>
+        <option value="Motel">Motel</option>
+        <option value="Apartman">Apartman</option>
+        <option value="Hostel">Hostel</option>
+        <option value="Kampovanje">Kampovanje</option>
+      </select>
+  
+      <label for="experience">Iskustvo:</label>
+      <textarea id="experience" [(ngModel)]="review.Iskustvo" name="experience" placeholder="Podelite vaše iskustvo..."></textarea>
+  
+      <!-- Dugme koje ne radi ništa -->
+      <button type="button" class="inactive-button" (click)="submitReview()">Pošalji recenziju</button>
+    </form>
+  </div>
+  
+</div>
