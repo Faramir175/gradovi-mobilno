@@ -16,6 +16,8 @@ import { environment } from 'src/environments/environment';
 export class CityDetailComponent implements OnInit {
   cityId: string = '';
   userId: string = '';
+  reviewId: string = '';
+  averageRating: string = '';
   city: City = {
     id: '',
     name: '',
@@ -28,7 +30,7 @@ export class CityDetailComponent implements OnInit {
   isFavorite: boolean = false;
 
   review = {
-    Ocena: 0,
+    Ocena: '',
     Broj_Dana: 0,
     Broj_Ljudi: 0,
     Tip_Smestaja: '',
@@ -53,72 +55,77 @@ export class CityDetailComponent implements OnInit {
 
     const userId = this.authService.getUserId();
 
+    this.getAverageRating();
+
     if(userId){
       this.cityService.getFavoriteCities(userId).subscribe(favoriteCities =>{
         this.isFavorite = favoriteCities.some(favorite => favorite.cityId === this.cityId)
-      })
+      });
+
+      this.reviewService.getReviewByUserAndCity(userId, this.cityId).subscribe(review => {
+        
+        console.log(review);
+        if(review)
+        {
+          this.review = review;
+          console.log("Imamo review");
+        }
+        else{
+          console.log("Nemamo review");
+        }
+        
+        
+      });
     }
   }
 
-  async submitReview() {
+  getAverageRating(): void {
+    this.reviewService.getAverageRating(this.cityId).subscribe(
+      averageRating => {
+        this.averageRating = averageRating;
+        console.log('Prosečna ocena:', this.averageRating);
+      },
+      error => {
+        console.error('Greška:', error);
+      }
+    );
+  }
+
+   submitReview() {
     const userId = this.authService.getUserId();
     console.log(userId);
+    console.log(this.review);
     if (this.cityId && userId) {
 
-      try {
-        // Pozovi ifReviewExists kao asinhronu funkciju
-        const reviewExists = await this.ifReviewExists();
-        console.log(reviewExists);
-
-        if (reviewExists) {
-          alert('Već ste ostavili recenziju za ovaj grad.');
-        } else {
-          this.reviewService.addReview(userId, this.cityId, this.review, this.city?.name).subscribe(() => {
-            alert('Vaša recenzija je uspešno poslata!');
-            console.log('Recenzija uspešno poslata');
-          }, (error: any) => {
-            console.error('Greška prilikom slanja recenzije:', error);
+      this.reviewService.addReview(userId, this.cityId, this.review, this.city?.name).subscribe(
+        response => {
+          alert('Vaša recenzija je uspešno poslata');
+          this.getAverageRating();
+          this.reviewService.getReviewByUserAndCity(userId, this.cityId).subscribe(review => {
+        
+            if(review)
+            {
+              this.review = review;
+              console.log("Imamo review");
+            }
+            else{
+              console.log("Nemamo review");
+            }
+            
+            
           });
+        },
+        error => {
+          console.error('Greska prilikom dodavanja recenzije:', error);
+          alert('Doslo je do greske prilikom slanja recenzije.');
         }
-      } catch (error) {
-        console.error('Greška tokom provere recenzija:', error);
-      }
+      );
+    }else{
+      alert('Nisu svi potreni podaci prisutni');
     }
-  }
-
-  async ifReviewExists(): Promise<boolean> {
-    const userId = this.authService.getUserId();
-    if (this.cityId && userId) {
-      try {
-        const favoriteId = await this.cityService.getFavoriteIdByCityId(userId, this.cityId).toPromise();
-
-        if (favoriteId) {
-          const result = await this.reviewService.checkIfOnlyCityIdExists(userId, favoriteId);
-          console.log("userID je:", userId);
-          console.log("FavoriteID je:", favoriteId);
-          console.log("Result je:", result);
-          if (!result) {
-            console.log('Postoji samo cityId.');
-            return true;
-          } else {
-            console.log('Postoji više od cityId ili nema podataka.');
-            return false;
-          }
-        } else {
-          console.log('Nije pronađen favoriteId.');
-          return false;
-        }
-      } catch (error) {
-        console.error('Greška tokom proveravanja recenzija:', error);
-        return false;
-      }
-    } else {
-      console.log('Nema cityId ili userId.');
-      return false;
+      
     }
-  }
   
-
   goBackToCities() {
     this.router.navigate(['/cities']);  // Navigacija na stranicu sa svim gradovima
   }
@@ -126,8 +133,8 @@ export class CityDetailComponent implements OnInit {
   goToFavorites() {
     this.router.navigate(['/favorites']);  // Navigacija na stranicu sa omiljenim gradovima
   }
-  
+}
 
   // Metoda za dobijanje detalja o gradu
  
-}
+

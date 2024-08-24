@@ -5,7 +5,8 @@
   </div>
   <div class="city-info">
     <p class="city-description">{{ city.description }}</p>
-    <p class="city-rating">Ocena: {{ city.rating }}</p>
+    <p class="city-rating">Prosečna ocena: {{ averageRating }}</p>
+    <p class="city-rating">Vaša ocena: {{review.Ocena}}</p>
   </div>
 
   <button class="city-btn" (click)="goBackToCities()">Nazad na gradove</button>
