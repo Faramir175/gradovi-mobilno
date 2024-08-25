@@ -135,5 +135,24 @@ getAverageRating(cityId: string): Observable<string> {
     })
   );
 }
-
+  deleteReview(userId: string, cityId: string): Observable<any> {
+    return this.cityService.getFavoriteIdByCityId(userId, cityId).pipe(
+      switchMap(favoriteId => {
+        if (favoriteId) {
+          return this.getReviewIdByUserId(userId, favoriteId).pipe(
+            switchMap(reviewId => {
+              if (reviewId) {
+                // Ako je reviewId pronađen, obriši ga
+                return this.http.delete(`${this.baseUrl}/${userId}/${favoriteId}/${reviewId}.json`);
+              } else {
+                throw new Error('Recenzija nije pronađena.');
+              }
+            })
+          );
+        } else {
+          throw new Error('Favorite ID nije pronađen.');
+        }
+      })
+    );
+  }
 }

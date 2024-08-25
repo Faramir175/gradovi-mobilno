@@ -18,8 +18,21 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-button expand="block" (click)="goBackToCities()">Nazad na gradove</ion-button>
-  <ion-button expand="block" (click)="goToFavorites()">Idi na Moja Putovanja</ion-button>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-button class="city-btn" (click)="goBackToCities()">Nazad na gradove</ion-button>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button class="favorite-btn" (click)="goToFavorites()">Idi na Moja Putovanja</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-button *ngIf="isFavorite" (click)="deleteReview()">Obriši recenziju</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-card *ngIf="isFavorite" class="review-card">
     <ion-card-header>

@@ -65,6 +65,12 @@ ion-label {
   color: white;
 }
 
+ion-card-header{
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centriranje sadržaja unutar kolone */
+}
+
 ion-select, ion-input, ion-textarea {
   width: 100%; /* Prilagodite širinu da odgovara kolonama */
   max-width: 400px; /* Maksimalna širina za form elemente */

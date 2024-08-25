@@ -16,7 +16,6 @@ import { environment } from 'src/environments/environment';
 export class CityDetailComponent implements OnInit {
   cityId: string = '';
   userId: string = '';
-  reviewId: string = '';
   averageRating: string = '';
   city: City = {
     id: '',
@@ -40,10 +39,10 @@ export class CityDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private cityService: CityService,
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router,
     private reviewService: ReviewService,
-  
+
   ) { }
 
   ngOnInit(): void {
@@ -63,7 +62,7 @@ export class CityDetailComponent implements OnInit {
       });
 
       this.reviewService.getReviewByUserAndCity(userId, this.cityId).subscribe(review => {
-        
+
         console.log(review);
         if(review)
         {
@@ -73,8 +72,8 @@ export class CityDetailComponent implements OnInit {
         else{
           console.log("Nemamo review");
         }
-        
-        
+
+
       });
     }
   }
@@ -102,7 +101,7 @@ export class CityDetailComponent implements OnInit {
           alert('Vaša recenzija je uspešno poslata');
           this.getAverageRating();
           this.reviewService.getReviewByUserAndCity(userId, this.cityId).subscribe(review => {
-        
+
             if(review)
             {
               this.review = review;
@@ -111,8 +110,8 @@ export class CityDetailComponent implements OnInit {
             else{
               console.log("Nemamo review");
             }
-            
-            
+
+
           });
         },
         error => {
@@ -123,9 +122,24 @@ export class CityDetailComponent implements OnInit {
     }else{
       alert('Nisu svi potreni podaci prisutni');
     }
-      
+
     }
-  
+
+  deleteReview() {
+    const userId = this.authService.getUserId();
+
+    if (userId && this.cityId) {
+      this.reviewService.deleteReview(userId, this.cityId).subscribe(() => {
+        alert('Recenzija je uspešno obrisana.');
+      }, error => {
+        alert('Nismo uspeli da pronađemo recenziju ili se dogodila greška.');
+        console.error('Greška prilikom brisanja recenzije:', error);
+      });
+    } else {
+      alert('Podaci o korisniku ili gradu nisu dostupni.');
+    }
+  }
+
   goBackToCities() {
     this.router.navigate(['/cities']);  // Navigacija na stranicu sa svim gradovima
   }
@@ -136,5 +150,5 @@ export class CityDetailComponent implements OnInit {
 }
 
   // Metoda za dobijanje detalja o gradu
- 
+
 
