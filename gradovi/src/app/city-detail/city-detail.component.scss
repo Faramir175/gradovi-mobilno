@@ -1,106 +1,124 @@
 .city-detail-container {
-    max-width: 800px;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  overflow-y: auto;
+}
+
+.city-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.city-image-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.city-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.city-info {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.city-description {
+  margin-bottom: 10px;
+}
+
+.city-rating {
+  font-weight: bold;
+}
+
+.favorite-form {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.naslov-forme {
+  text-align: center;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centriranje sadržaja unutar kolone */
+  margin-bottom: 15px;
+}
+
+ion-label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: white;
+}
+
+ion-select, ion-input, ion-textarea {
+  width: 100%; /* Prilagodite širinu da odgovara kolonama */
+  max-width: 400px; /* Maksimalna širina za form elemente */
+}
+ion-grid{
+  background: black;
+  border-radius: 10px;
+}
+
+.inactive-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  opacity: 0.6;
+}
+.city-card, .review-card {
+  max-width: 100%;
+  margin: 20px auto;
+  box-shadow: none;
+}
+
+.city-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+@media (min-width: 768px) {
+  .city-card, .review-card {
+    max-width: 700px; /* Smanjuje širinu kartice na računarima */
     margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    overflow-y: auto;
-  }
-  
-  .city-title {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .city-image-container {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .city-image {
-    max-width: 600px; /* Prilagođava sliku širini kontejnera */
-    height: auto; /* Održava proporcije slike */
-    border-radius: 8px;
-  }
-  .city-btn, .favorite-btn {
-    margin: 10px 5px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .city-btn:hover, .favorite-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  .city-info {
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
-  .city-description {
-    margin-bottom: 10px;
-  }
-  
-  .city-rating {
-    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .favorite-form {
-    margin-top: 20px;
+  ion-card-header ion-card-title {
+    font-size: 1.5rem;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  ion-card-content {
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  
-  .favorite-form h2 {
-    margin-bottom: 20px;
-    text-align: center;
+
+  ion-button {
+    max-width: 700px;
+    margin: 0 auto 10px;
   }
-  
-  .favorite-form form {
-    display: flex;
-    flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .city-card, .review-card {
+    max-width: 800px; /* Još više povećava širinu za veće ekrane */
   }
-  
-  .favorite-form label {
-    margin: 10px 0 5px;
-    font-weight: bold;
-  }
-  
-  .favorite-form input[type="text"],
-  .favorite-form input[type="number"],
-  .favorite-form select,
-  .favorite-form textarea {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .favorite-form textarea {
-    height: 100px;
-    resize: vertical;
-  }
-  
-  .inactive-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    opacity: 0.6;
-  }
-  
+}

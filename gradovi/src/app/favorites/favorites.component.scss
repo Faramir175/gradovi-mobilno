@@ -1,18 +1,26 @@
 .page-title{
     text-align: center;
-    
+
   }
-  
+
   .cities-container {
     display: flex;
-   
+
     flex-wrap: wrap; /* Omogućava prelamanje u novi red */
     justify-content: center;
     overflow-y: auto; /* Omogućava vertikalno skrolovanje */
     max-height: 80vh; /* Maksimalna visina kontejnera */
     padding: 10px; /* Udaljenost od ivica */
+    flex-grow: 1; /* Allows .cities-container to grow and take available space */
   }
-  
+app-favorites.ion-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Ensures content starts from the top */
+  align-items: stretch; /* Ensures elements stretch to fit the container */
+  height: auto; /* Adjusts height to content */
+}
+
   .city-container {
     width: 300px;
     height: 200px; /* Širina svakog grada (3 u redu sa razmakom) */
@@ -24,21 +32,21 @@
     position: relative; /* Potrebno za pozicioniranje .city-info */
     transition: transform 0.3s; /* Efekat prilikom hovera */
   }
-  
+
   .city-container:hover {
     transform: scale(1.05); /* Uvećava karticu prilikom hovera */
   }
-  
+
   .image-container {
     position: relative; /* Za pozicioniranje informacija o gradu */
   }
-  
+
   .city-image {
     width: 100%; /* Širina slike */
     height: 100%; /* Automatska visina slike */
     object-fit: cover; /* Povećava sliku da pokrije celokupnu površinu */
   }
-  
+
   .city-info {
     position: absolute; /* Pozicionira naziv grada i ikone */
     bottom: 10px; /* Udaljenost od donjeg ruba */
@@ -50,13 +58,13 @@
     display: flex; /* Da bi se elementi poravnali */
     align-items: center; /* Vertikalno centriranje */
   }
-  
+
   .city-name {
     font-size: 16px; /* Veličina fonta imena grada */
     font-weight: bold; /* Podebljan tekst */
     margin-right: 5px; /* Razmak između imena grada i ikone */
   }
-  
+
   .favorites-icon {
     width: 20px; /* Širina ikone */
     height: 20px; /* Visina ikone */
@@ -66,8 +74,7 @@
   .added{
     color: red;
   }
-  
+
   .favorites-icon:hover {
     transform: scale(1.2); /* Uvećava ikonu prilikom hovera */
   }
-  

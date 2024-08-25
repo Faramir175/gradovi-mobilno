@@ -32,7 +32,7 @@ export class ReviewService {
             if (favoriteId) {
                 const reviewData = { ...review, Grad };
                 console.log("Salje se");
-                
+
                 if (this.reviewId) {
                   // Ako reviewId postoji, izvrši PUT zahtev sa reviewId
                   console.log(this.reviewId);
@@ -61,7 +61,7 @@ getReviewByUserAndCity(userId: string, cityId: string): Observable<any> {
     switchMap(favoriteId => {
       if (favoriteId) {
         console.log("Favorite ID je:",favoriteId);
-        
+
         // Pozivamo drugu metodu koja vraća reviewId
         return this.getReviewIdByUserId(userId, favoriteId).pipe(
           switchMap(reviewId => {
@@ -79,7 +79,7 @@ getReviewByUserAndCity(userId: string, cityId: string): Observable<any> {
         throw new Error('Favorite ID not found');
       }
     }),
-    
+
   );
 }
 
@@ -96,7 +96,7 @@ public getReviewIdByUserId(userId: string, favoriteId: string): Observable<strin
           this.reviewId = reviewIds[0];
           console.log(reviewIds[0]);
         }
-       
+
         return reviewIds.length > 1 ? reviewIds[0] : null;
       } else {
         console.log("Neuspesno");
@@ -107,7 +107,7 @@ public getReviewIdByUserId(userId: string, favoriteId: string): Observable<strin
       console.error("Greška prilikom dobijanja reviewId:", error);
       return throwError(() => new Error('Greška prilikom dobijanja reviewId'));
     })
-  );  
+  );
 }
 
 getAverageRating(cityId: string): Observable<string> {
@@ -126,7 +126,7 @@ getAverageRating(cityId: string): Observable<string> {
         console.log(average);
         return average.toFixed(2);
       } else {
-        return '5.00';
+        return 'No ratings';
       }
     }),
     catchError(error => {

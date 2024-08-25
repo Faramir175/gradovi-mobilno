@@ -1,51 +1,88 @@
-<div class="city-detail-container" *ngIf="city">
-  <h1 class="city-title">{{ city.name }}</h1>
-  <div class="city-image-container">
-    <img [src]="city.imageUrl" alt="{{ city.name }}" class="city-image" />
-  </div>
-  <div class="city-info">
-    <p class="city-description">{{ city.description }}</p>
-    <p class="city-rating">Prosečna ocena: {{ averageRating }}</p>
-    <p class="city-rating">Vaša ocena: {{review.Ocena}}</p>
-  </div>
+<ion-content>
+  <ion-card *ngIf="city" class="city-card">
+    <ion-card-header>
+      <ion-card-title>{{ city.name }}</ion-card-title>
+    </ion-card-header>
 
-  <button class="city-btn" (click)="goBackToCities()">Nazad na gradove</button>
-  <button class="favorite-btn" (click)="goToFavorites()">Idi na Moja Putovanja</button>
+    <ion-card-content>
+      <ion-img [src]="city.imageUrl" alt="{{ city.name }}" class="city-image"></ion-img>
+      <ion-item lines="none">
+        <ion-text class="city-description">{{ city.description }}</ion-text>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-text class="city-rating">Prosečna ocena: {{ averageRating | number:'1.1-1' }}</ion-text>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-text class="city-rating">Vaša ocena: {{ review.Ocena }}</ion-text>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 
-  <div *ngIf="isFavorite" class="favorite-form">
-    <h2>Ostavi recenziju za svoje putovanje</h2>
-    <form>
-      
-      <label for="rating">Ocena:</label>
-      <select id="rating" [(ngModel)]="review.Ocena" name="rating">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-  
-      <label for="duration">Trajanje putovanja (u danima):</label>
-      <input type="number" id="duration" [(ngModel)]="review.Broj_Dana" name="duration" min="1" placeholder="Unesite broj dana..." />
-  
-      <label for="peopleCount">Broj ljudi na putovanju:</label>
-      <input type="number" id="peopleCount" [(ngModel)]="review.Broj_Ljudi" name="peopleCount" min="1" placeholder="Unesite broj ljudi..." />
-  
-      <label for="accommodationType">Tip smeštaja:</label>
-      <select id="accommodationType" [(ngModel)]="review.Tip_Smestaja" name="accommodationType">
-        <option value="Hotel">Hotel</option>
-        <option value="Motel">Motel</option>
-        <option value="Apartman">Apartman</option>
-        <option value="Hostel">Hostel</option>
-        <option value="Kampovanje">Kampovanje</option>
-      </select>
-  
-      <label for="experience">Iskustvo:</label>
-      <textarea id="experience" [(ngModel)]="review.Iskustvo" name="experience" placeholder="Podelite vaše iskustvo..."></textarea>
-  
-      <!-- Dugme koje ne radi ništa -->
-      <button type="button" class="inactive-button" (click)="submitReview()">Pošalji recenziju</button>
-    </form>
-  </div>
-  
-</div>
+  <ion-button expand="block" (click)="goBackToCities()">Nazad na gradove</ion-button>
+  <ion-button expand="block" (click)="goToFavorites()">Idi na Moja Putovanja</ion-button>
+
+  <ion-card *ngIf="isFavorite" class="review-card">
+    <ion-card-header>
+      <ion-card-title class="naslov-forme">Ostavi recenziju za svoje putovanje</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form (ngSubmit)="submitReview()">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" class="form-item">
+              <ion-label>Ocena:</ion-label>
+              <ion-select [(ngModel)]="review.Ocena" name="rating">
+                <ion-select-option value="1">1</ion-select-option>
+                <ion-select-option value="2">2</ion-select-option>
+                <ion-select-option value="3">3</ion-select-option>
+                <ion-select-option value="4">4</ion-select-option>
+                <ion-select-option value="5">5</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12" class="form-item">
+              <ion-label>Trajanje putovanja (u danima):</ion-label>
+              <ion-input type="number" [(ngModel)]="review.Broj_Dana" name="duration" min="1" placeholder="Unesite broj dana..."></ion-input>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12" class="form-item">
+              <ion-label>Broj ljudi na putovanju:</ion-label>
+              <ion-input type="number" [(ngModel)]="review.Broj_Ljudi" name="peopleCount" min="1" placeholder="Unesite broj ljudi..."></ion-input>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12" class="form-item">
+              <ion-label>Tip smeštaja:</ion-label>
+              <ion-select [(ngModel)]="review.Tip_Smestaja" name="accommodationType">
+                <ion-select-option value="Hotel">Hotel</ion-select-option>
+                <ion-select-option value="Motel">Motel</ion-select-option>
+                <ion-select-option value="Apartman">Apartman</ion-select-option>
+                <ion-select-option value="Hostel">Hostel</ion-select-option>
+                <ion-select-option value="Kampovanje">Kampovanje</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12" class="form-item">
+              <ion-label>Iskustvo:</ion-label>
+              <ion-textarea [(ngModel)]="review.Iskustvo" name="experience" placeholder="Podelite vaše iskustvo..."></ion-textarea>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12" class="form-item">
+              <ion-button expand="block" type="submit">Pošalji recenziju</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
