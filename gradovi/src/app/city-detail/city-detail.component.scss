@@ -55,7 +55,7 @@
 .form-item {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centriranje sadržaja unutar kolone */
+  align-items: center;
   margin-bottom: 15px;
 }
 
@@ -68,12 +68,12 @@ ion-label {
 ion-card-header{
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centriranje sadržaja unutar kolone */
+  align-items: center;
 }
 
 ion-select, ion-input, ion-textarea {
-  width: 100%; /* Prilagodite širinu da odgovara kolonama */
-  max-width: 400px; /* Maksimalna širina za form elemente */
+  width: 100%;
+  max-width: 400px;
 }
 ion-grid{
   background: black;
@@ -102,7 +102,7 @@ ion-grid{
 
 @media (min-width: 768px) {
   .city-card, .review-card {
-    max-width: 700px; /* Smanjuje širinu kartice na računarima */
+    max-width: 700px;
     margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
@@ -125,6 +125,6 @@ ion-grid{
 
 @media (min-width: 1024px) {
   .city-card, .review-card {
-    max-width: 800px; /* Još više povećava širinu za veće ekrane */
+    max-width: 800px;
   }
 }

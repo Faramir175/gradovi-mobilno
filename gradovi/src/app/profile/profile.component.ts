@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router'; // Importujte Router
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +12,7 @@ export class ProfileComponent implements OnInit {
   yearOfBirth: number | null = null;
   email: string | null = '';
 
-  constructor(private authService: AuthService, private router: Router) { } // Dodajte Router
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.username = this.authService.getUsername();
@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.removeToken(); // Uklonite token
-    this.router.navigate(['/login']); // Preusmerite na stranicu za prijavu
+    this.authService.removeToken();
+    this.router.navigate(['/login']); // Preusmerava na stranicu za prijavu
   }
 }

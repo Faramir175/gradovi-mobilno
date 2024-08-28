@@ -24,7 +24,6 @@ export class CityDetailComponent implements OnInit {
     description: '',
     rating: '',
     isInFavorites: false,
-    // Dodajte i ostale potrebne inicijalne vrednosti
   };
   isFavorite: boolean = false;
 
@@ -150,5 +149,3 @@ export class CityDetailComponent implements OnInit {
 }
 
   // Metoda za dobijanje detalja o gradu
-
-

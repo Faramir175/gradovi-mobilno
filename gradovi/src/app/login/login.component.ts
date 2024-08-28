@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service'; // Kreiramo AuthService kasnije
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent {
     this.authService.login(this.email, this.password).subscribe(
       response => {
         console.log('Uspešno ste se ulogovali:', response);
-        this.router.navigate(['/cities']); // Preusmeri korisnika na stranicu sa gradovima
+        this.router.navigate(['/cities']); // Preusmerava korisnika na stranicu sa gradovima
       },
       error => {
         console.error('Greška pri logovanju:', error);

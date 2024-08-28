@@ -28,7 +28,6 @@ export class ReviewService {
   addReview(userId: string, cityId: string,  review: any, Grad: string): Observable<any> {
     return this.cityService.getFavoriteIdByCityId(userId, cityId).pipe(
         switchMap(favoriteId => {
-            // Proverite da li favoriteId nije null
             if (favoriteId) {
                 const reviewData = { ...review, Grad };
                 console.log("Salje se");

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { AuthService } from './services/auth.service';  
+import { AuthService } from './services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +19,11 @@ export class AuthGuard implements CanActivate {
 
     // Ako niste na login/register stranici, proverite da li ste prijavljeni
     if (this.authService.isLoggedIn()) {
-      return true; // Korisnik je prijavljen, dozvolite pristup
+      return true;
     } else {
       // Preusmerite na stranicu za prijavu
       this.router.navigate(['/login']);
-      return false; // Sprečite pristup
+      return false;
     }
   }
 }

@@ -5,7 +5,6 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
-
 @Component({
   selector: 'app-cities',
   templateUrl: './cities.component.html',
@@ -13,22 +12,19 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class CitiesComponent implements OnInit {
   cities: City[] = [];
-  favorites: string[] = []; // Lista omiljenih gradova
+  favorites: string[] = [];
 
-  constructor(private cityService: CityService, private authService: AuthService, private router: Router,private dialog: MatDialog) {
-    console.log('CitiesComponent inicijalizovan.');
-  }
+  constructor(private cityService: CityService, private authService: AuthService, private router: Router, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.loadCities();
-    this.loadFavoriteCities(); // Učitaj omiljene gradove pri inicijalizaciji
+    this.loadFavoriteCities();
   }
 
   loadCities() {
     this.cityService.getCities().subscribe((data: City[]) => {
       this.cities = data;
-      console.log(this.cities); // Proverite da li ste uspešno učitali gradove
-      this.checkFavorites(); // Proverite omiljene gradove nakon učitavanja
+      this.checkFavorites();
     }, error => {
       console.error("Greška prilikom učitavanja gradova:", error);
     });
@@ -38,8 +34,8 @@ export class CitiesComponent implements OnInit {
     const userId = this.authService.getUserId();
     if (userId) {
       this.cityService.getFavoriteCities(userId).subscribe(favorites => {
-        this.favorites = favorites.map(fav => fav.cityId); // Dobijamo ID-ove omiljenih gradova
-        this.checkFavorites(); // Ažuriraj status omiljenih gradova
+        this.favorites = favorites.map(fav => fav.cityId);
+        this.checkFavorites();
       });
     }
   }
@@ -51,12 +47,12 @@ export class CitiesComponent implements OnInit {
   }
 
   addToFavorites(city: City, event: MouseEvent): void {
-    event.stopPropagation(); // Prekinite propagaciju klika
-    const userId = this.authService.getUserId(); // Dobijte ID korisnika
+    event.stopPropagation();
+    const userId = this.authService.getUserId();
     if (userId) {
       this.cityService.addCityToFavorites(userId, city.id).subscribe(() => {
-        city.isInFavorites = true; // Postavite isInFavorites na true
-        this.favorites.push(city.id); // Ažuriraj listu omiljenih
+        city.isInFavorites = true;
+        this.favorites.push(city.id);
       });
     } else {
       console.error("User ID is null, cannot add city to favorites.");
@@ -64,13 +60,13 @@ export class CitiesComponent implements OnInit {
   }
 
   removeFromFavorites(city: City, event: MouseEvent): void {
-    event.stopPropagation(); // Prekinite propagaciju klika
-    const userId = this.authService.getUserId(); // Dobijte ID korisnika
-  
+    event.stopPropagation();
+    const userId = this.authService.getUserId();
+
     if (userId) {
       this.cityService.removeCityFromFavorites(userId, city.id).subscribe(() => {
-        city.isInFavorites = false; // Postavite isInFavorites na false
-        this.favorites = this.favorites.filter(fav => fav !== city.id); // Ažuriraj listu omiljenih
+        city.isInFavorites = false;
+        this.favorites = this.favorites.filter(fav => fav !== city.id);
       });
     } else {
       console.error("User ID is null, cannot remove city from favorites.");
@@ -78,9 +74,7 @@ export class CitiesComponent implements OnInit {
   }
 
   navigateToDetails(cityId: string, event: MouseEvent): void {
-    event.stopPropagation(); // Sprečavanje događaja na roditeljskoj komponenti
-  
-    this.router.navigate(['/city-detail', cityId]); 
+    event.stopPropagation();
+    this.router.navigate(['/city-detail', cityId]);
   }
-  
 }

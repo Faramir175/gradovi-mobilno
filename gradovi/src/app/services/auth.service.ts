@@ -20,13 +20,13 @@ export class AuthService {
       email,
       password,
       returnSecureToken: true,
-      
+
     }).pipe(
       tap((response: any) => {
         if (response && response.idToken) {
-          this.storeToken(response.idToken); // Čuvanje tokena
-          this.storeEmail(email); // Čuvanje emaila
-          this.storeUserData(username, yearOfBirth); // Čuvanje dodatnih podataka
+          this.storeToken(response.idToken);
+          this.storeEmail(email);
+          this.storeUserData(username, yearOfBirth);
           const userId = response.localId;
           this.saveUserData(userId, username, yearOfBirth);
         }
@@ -53,8 +53,8 @@ export class AuthService {
     }).pipe(
       tap((response: any) => {
         if (response && response.idToken) {
-          this.storeToken(response.idToken); // Čuvanje tokena
-          this.storeEmail(email); // Čuvanje emaila
+          this.storeToken(response.idToken);
+          this.storeEmail(email);
           const userId = response.localId;
           this.fetchUserData(userId);
         }
@@ -85,8 +85,8 @@ export class AuthService {
 
   // Čuvanje dodatnih podataka o korisniku
   storeUserData(username: string, yearOfBirth: number): void {
-    localStorage.setItem('username', username); // Čuvanje korisničkog imena
-    localStorage.setItem('yearOfBirth', yearOfBirth.toString()); // Čuvanje godine rođenja
+    localStorage.setItem('username', username);
+    localStorage.setItem('yearOfBirth', yearOfBirth.toString());
   }
 
   // Vraćanje emaila korisnika
@@ -99,10 +99,9 @@ export class AuthService {
     return localStorage.getItem('username');
   }
 
-  // Vraćanje godine rođenja
   getYearOfBirth(): number | null {
     const year = localStorage.getItem('yearOfBirth');
-    return year ? +year : null; // Vraća godinu rođenja kao broj
+    return year ? +year : null; // Vraca godinu rodjenja kao broj
   }
 
   // Preuzimanje tokena iz LocalStorage
@@ -111,15 +110,15 @@ export class AuthService {
   }
 
   getUserId(): string | null {
-    const userEmail = this.getEmail(); // Ili neki drugi način da dobijete korisnika
+    const userEmail = this.getEmail();
     return userEmail ? userEmail.replace(/[@.]/g, '_') : null; // Primer: zamenjuje @ i . za jedinstveni ID
   }
   // Brisanje tokena iz LocalStorage
   removeToken(): void {
     localStorage.removeItem('userToken');
-    localStorage.removeItem('userEmail'); // Takođe obrišite email
-    localStorage.removeItem('username'); // Obrišite korisničko ime
-    localStorage.removeItem('yearOfBirth'); // Obrišite godinu rođenja
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('username');
+    localStorage.removeItem('yearOfBirth');
   }
 
   // Proverava da li je korisnik prijavljen

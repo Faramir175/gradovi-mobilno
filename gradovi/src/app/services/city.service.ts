@@ -11,7 +11,7 @@ import { throwError } from 'rxjs';
 })
 export class CityService {
   private baseUrl = `${environment.firebaseConfig.databaseURL}/cities/cities`;
-  private favoritesUrl = `${environment.firebaseConfig.databaseURL}/favorites`; // URL za omiljene gradove
+  private favoritesUrl = `${environment.firebaseConfig.databaseURL}/favorites`;
 
   constructor(private http: HttpClient) {
     console.log("Uspesno povezan sa CityService");
@@ -30,7 +30,7 @@ export class CityService {
               imageUrl: citiesData[key].imageUrl,
               description: citiesData[key].description,
               rating: citiesData[key].rating,
-              isInFavorites: false // Inicijalno postavi na false
+              isInFavorites: false
             });
           }
         }
@@ -38,38 +38,33 @@ export class CityService {
       }));
   }
 
-  // Dohvati grad po ID-u
   getCity(cityId: string): Observable<City> {
     return this.http.get<City>(`${this.baseUrl}/${cityId}.json`);
   }
 
-  // Dohvati omiljene gradove za specifičnog korisnika
   getFavoriteCities(userId: string): Observable<{ cityId: string }[]> {
     return this.http.get<{ [key: string]: { cityId: string } }>(`${this.favoritesUrl}/${userId}.json`)
       .pipe(map(favoritesData => {
         const favoriteCities: { cityId: string }[] = [];
         for (const key in favoritesData) {
           if (favoritesData.hasOwnProperty(key)) {
-            const { cityId } = favoritesData[key]; // Preuzmi samo cityId
-            favoriteCities.push({ cityId }); // Dodaj samo cityId
+            const { cityId } = favoritesData[key];
+            favoriteCities.push({ cityId });
           }
         }
         return favoriteCities;
       }));
   }
 
-  // Dodaj grad u omiljene za specifičnog korisnika
   addCityToFavorites(userId: string, cityId: string): Observable<City> {
     console.log("Dodavanje");
     return this.http.post<City>(`${this.favoritesUrl}/${userId}.json`, { cityId });
   }
 
-  // Izbaci grad iz omiljenih
   removeCityFromFavorites(userId: string, cityId: string): Observable<void> {
-    
-    
-    // Prvo pronađi favoriteId
-    
+
+
+
     return this.getFavoriteIdByCityId(userId, cityId).pipe(
       switchMap(favoriteId => {
         if (favoriteId) {
@@ -86,7 +81,7 @@ export class CityService {
       })
     );
   }
-  
+
   // Pomoćna metoda za pronalaženje favoriteId
   public getFavoriteIdByCityId(userId: string, cityId: string): Observable<string | null> {
     console.log("Pozvana");
@@ -95,11 +90,11 @@ export class CityService {
         map(favorites => {
           for (const favoriteId in favorites) {
             if (favorites[favoriteId].cityId === cityId) {
-              
-              return favoriteId; // Vraća favoriteId
+
+              return favoriteId;
             }
           }
-          return null; // Ako nije pronađeno
+          return null;
         }),
         catchError(error => {
           console.error('Greška prilikom pretraživanja favorita:', error);
@@ -107,5 +102,5 @@ export class CityService {
         })
       );
   }
-  
+
 }

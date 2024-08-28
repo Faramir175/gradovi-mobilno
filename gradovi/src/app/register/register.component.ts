@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service'; // Kreiramo AuthService kasnije
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -10,8 +10,8 @@ import { AuthService } from '../services/auth.service'; // Kreiramo AuthService 
 export class RegisterComponent {
   email: string = '';
   password: string = '';
-  username: string = ''; // Novo polje za korisničko ime
-  yearOfBirth: number | null = null; // Novo polje za godinu rođenja
+  username: string = '';
+  yearOfBirth: number | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -21,7 +21,7 @@ export class RegisterComponent {
         .subscribe(
           response => {
             console.log('Uspešno ste se registrovali:', response);
-            this.router.navigate(['/login']); // Preusmeri korisnika na login nakon registracije
+            this.router.navigate(['/login']);
           },
           error => {
             console.error('Greška pri registraciji:', error.message);

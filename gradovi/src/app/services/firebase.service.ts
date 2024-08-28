@@ -21,7 +21,7 @@ export class FirebaseService {
     return this.http.post(`${this.baseUrl}/cities.json`, city);
   }
 
-  // PUT: Ažuriraj postojeći grad u Firebase bazi
+  // PUT: Ažuriraj postojeci grad u Firebase bazi
   updateCity(id: string, city: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/cities/${id}.json`, city);
   }
